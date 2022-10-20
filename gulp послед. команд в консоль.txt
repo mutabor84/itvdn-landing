@@ -1,0 +1,123 @@
+Установить node и git на компьютер обязательно!
+
+Gulp — это таск-менеджер для автоматического выполнения часто используемых задач, написанный на языке программирования JavaScript.
+Pug — это шаблонизатор и html-препроцессор, написанный на javascript для платформы Node.js, с целью ускорения верстки.
+
+
+---Создаем репозиторий Git---
+     следуем командам, которые на его странице указаны:
+     (если первая настройка Git: 
+$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@example.com)
+
+$ git init 	(устанавливаем инициализацию Гита на папку в папке проекта)
+echo "# itvdn-landing" >> README.md
+$ add README.MD (НУЖНО СОЗДАТЬ ФАЙЛ РИДМИ.МД или можно в файловой системе. Плагин Markdown Preview Enhanced)
+		(в этом файле .MD свой синтаксис)
+
+     (npm Это nodовский пакетный менеджер)
+
+
+---Устанавливаем Gulp---
+$ npm i gulp
+	или
+        $ npm install gulpjs/gulp-cli#4.0 -g (если версия уже нове, вводим команду указанную в консоли, например: "npm install -g npm@8.19.2")
+
+********************************************************************************
+---Склонировать репозиторий---
+$ git clone https://github.com/mutabor84/itvdn-landing.git
+	(если скачали чей-то проект с git)
+$npm install - установит все пакеты, которые указаны в файле packege.json
+********************************************************************************
+---Создаем файл .gitignore. В файловой системе в папке проекта---
+(здесь то, что не должно быть закачано на git, чтоб не доблировать уже имеющиеся там)
+
+---Добавляем файлы в commit (делаем снимок) хранится локально.
+$ git add README.MD .gitignore
+
+что бы отправить на сервер, ружро использовать команду git push
+$ git remote add origin https://github.com/mutabor84/itvdn-landing.git - указыаем что, удаленный сервер по этой ссылке будет находиться
+$ git push -u origin main (origin - сокращенно слово, которое хранит ссылку выше. ) отправили на сервер.
+*********************************************************************************************
+
+---Cоздание файла package.json---
+$ npm init
+
+---Устанавливаем browser-sync, gulp-pug, gulp-sass---  (обновляет странички после каждого сохраненения файлов)
+$ npm install browser-sync gulp gulp-pug gulp-sass --save-dev
+
+---создаем gulpfile.js--- в нем описываем зачади галпа
+
+в gulpfile:
+подключаем gulp
+var gulp        = require('gulp');
+
+подключаем browser-sync:
+var browserSync = require('browser-sync').create();
+
+подключаем gulp-pug
+const pug = require('gulp-pug');
+
+
+// Static server
+gulp.task('browser-sync', function() {
+    browserSync.init({
+        server: {
+            baseDir: "./"
+        }
+    });
+gulp.watch('build/**/*').on('change', browserSync.reload);
+
+});
+
+
+// Pug compile
+gulp.task('templates:compile', function buildHTML(){
+    return gulp.src('source/template/index.pug')
+        .pipe(pug({
+            pretty: true
+        }))
+	.pipe(gulp.dest('build'))
+});
+
+gulp.task('sass', function() {
+    return gulp.src('source/styles/main.scss')
+      .pipe(sass().on('error', sass.logError))
+      .pipe(gulp.dest('.build/css'));
+  });
+
+gulp.task('sprite', function (cb) {
+    var spriteData = gulp.src('source/images/icons/*.png').pipe(spritesmith({
+      imgName: 'sprite.png',
+      imgName: '../images/sprite.png',
+      cssName: 'sprite.scss'
+    }));
+    // return 
+    spriteData.img.pipe(gulp.dest('build/images'));
+    spriteData.css.pipe(gulp.dest('source/styles/global/'));
+    cb();
+  });
+**************************************************************************************
+
+---создаем папку source---
+в ней создаем папки fonts image style template
+
+************************************ДЗ*******************************************
+##Основные команды
+1. Git
+- git status
+- git add
+- git commit -m "some comment"
+- git push
+- git branch
+- git checkout
+- git merge
+
+2. Gulp
+
+	Практика с установкой Галпа и его пакетов.
+	autoprefixer и sourcemaps Разобраться что это и установить в проект
+
+Посмотреть: Git branch, checkout
+
+
