@@ -18,3 +18,20 @@ npm -v
 > $ git clone https://github.com/mutabor84/itvdn-landing.git
 
 *Запустить команду npm install в треминале.
+
+##ДЗ
+
+1. Git
+##Основные команды
+- git status
+- git add
+- git commit -m "some comment"
+- git push
+- git branch
+- git checkout
+- git merge
+
+2. Gulp
+
+	Практика с установкой Галпа и его пакетов.
+	autoprefixer и sourcemaps Разобраться что это и установить в проект
